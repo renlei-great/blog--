@@ -16,7 +16,6 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from blog.test_for import test
-from user import models
 
 
 urlpatterns = [
