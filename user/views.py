@@ -14,11 +14,11 @@ AUTH_EXPIR = 60*60*8
 
 
 def gen_token(user_id):
-    """使用jwt生成token
-    jwt参数
-    一：一个字段是内容
-    二：自己的秘钥
-    三：加密方式，默认ＨＳ２５６
+    """
+    使用jwt生成token　　jwt.encode默认参数：
+        payload：一个字段是内容
+        key：自己的秘钥
+        algorithm：加密方式，默认ＨＳ２５６
     """
     # 使用ｊｗｔ
     return jwt.encode({
@@ -35,11 +35,8 @@ def authenticate(func):
             token = request.META.get('HTTP_JWT').encode()
             # 处理业务，验证是否登录
             payload = jwt.decode(token, settings.SECRET_KEY)  # 自动会验证是否超时，如果超时会抛出异常
-            # timestamp = payload.get('timestamp')
-            # if (datetime.datetime.now().timestamp() - int(timestamp)) > TIMEOUT_TOKEN:
-            #     return HttpResponse(status=401)
-            # 已经登录
-            # 在数据库中查询出此用户
+
+            # 已经登录,在数据库中查询出此用户
             user_id = payload.get('user_id')
             user = User.objects.get(pk=user_id)
             request.user = user
