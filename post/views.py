@@ -67,7 +67,7 @@ def validate(name:str, d:dict, cvt_func, default, val_func):
         page = 1
     """
     try:
-        ret = d.get(name)
+        ret = d.get(name, default)
         ret = cvt_func(ret)
         ret = val_func(ret, default)
     except Exception as e:
@@ -80,7 +80,7 @@ def getall(request: HttpRequest):
     try:
         # 使用封装的函数进行验证
         page = validate('page', request.GET, int, 1, val_func=lambda x,y: x if x > 0 else y)
-        size = validate('size', request.GET, int, 20, val_func=lambda x,y: x if x > 0 and x > 101 else y)
+        size = validate('size', request.GET, int, 20, val_func=lambda x,y: x if x > 0 and x < 101 else y)
 
         qs = Post.objects
         counts = qs.count()
@@ -93,7 +93,7 @@ def getall(request: HttpRequest):
                 'title': port.title,
                 'port_id': port.id,
             }for port in ports],
-            'pagination':{  # 当前页，　总页数，　总行数，　每页多少条信息
+            'pagination':{  # page当前页，　pages总页数，　counts总行数，　size每页多少条信息
                 'page': page,
                 'size': size,
                 'counts': counts,
