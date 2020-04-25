@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'blog',
         'USER': 'root',
         'PASSWORD': 'ubuntu',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.223.132',
         'PORT': 3306,
     }
 }
